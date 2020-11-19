@@ -10,7 +10,7 @@ The chaincode for IoT payment network is in [contract directory](/blocklistner/s
 
 iQuery apply **block listener** to receive blocks from a Fabric peer node with a valid certificate. Then iQuery employs a Merkle tree based multi-origin query to enable tamper evident query results from different organization domains. CouchDB supports Map-Reduce functions for conditional and temporal queries.
 
-![image](</picture/architecture.PNG>)
+![image](</picture/architecture.GIF>)
 
 
 
