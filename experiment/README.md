@@ -1,7 +1,8 @@
 # Quick Start
 
-The Merkle tree based multi-origin query is realized in **merkletreequery.js**.
+The Merkle Bucket Tree based multi-origin query is realized in **merklebuckettreequery.js**.
 
-We are able to acquire the latency of conditional queries against iQuery with **conditionalquery.js**.
+We are able to acquire the latency of conditional queries against IQUERY with **conditionalquery.js**.
 
-We use the Merkle tree implementation  of  https://github.com/miguelmota/merkletreejs
+We use the  Merkle Bucket Tree  implementation  of  https://www.npmjs.com/package/buckets-js
+

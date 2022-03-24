@@ -12,9 +12,9 @@ const queryargdown = queryarg - 10;
 
 const myData = [];
 
-const searchdb = nano.use('mychannel_edu_test3consumeservicetx');
-const db = nano.use('mychannel_edu_historywithvalue');
-const searchdb2 = nano.use('mychannel_edu_test1historywithvalue');
+const searchdb = nano.use('mychannel_iot_test3consumeservicetx');
+const db = nano.use('mychannel_iot_historywithvalue');
+const searchdb2 = nano.use('mychannel_iot_test1historywithvalue');
 
 const  q =  {
     selector: {
@@ -51,12 +51,12 @@ const  q3 = {
                 "$and": [
                     {
                         docType: {
-                            "$eq": "service"
+                            "$eq": "pizza"
                         }
                     },
                     {
                         owner: {
-                            "$eq": "User_21@A.com"
+                            "$eq": "User_21@supermarket.com"
                         }
                     }
                 ]
@@ -80,8 +80,8 @@ const  q4 =   {
             {
                 value: {
                     "$or": [
-                        { owner: "User_21@A.com" },
-                        { owner: "User_22@A.com" }
+                        { owner: "User_21@supermarket.com" },
+                        { owner: "User_22@supermarket.com" }
                     ]
                 }
             }

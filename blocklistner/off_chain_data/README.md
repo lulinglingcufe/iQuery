@@ -65,7 +65,7 @@ Use the following command to start the sample network:
 
 This command uses the `first-network` sample to deploy a fabric network with an
 ordering service, two peer organizations with two peers each, and a channel
-named `mychannel`. The marbles chaincode will be installed on all four peers and
+named `mychannel`. The commoditys chaincode will be installed on all four peers and
 instantiated on the channel.
 
 ### Starting the Channel Event Listener
@@ -130,7 +130,7 @@ contain a read-write set.
 
 The channel event listener also writes metadata from each block to a log file
 defined as channelid_chaincodeid.log. In this example, events will be written to
-a file named `mychannel_marbles.log`. This allows you to record a history of
+a file named `mychannel_commoditys.log`. This allows you to record a history of
 changes made by each block for each key in addition to storing the latest value
 of the world state.
 
@@ -139,42 +139,42 @@ new window to execute the next parts of the demo.
 
 ### Generate data on the blockchain
 
-Now that our listener is setup, we can generate data using the marbles chaincode
+Now that our listener is setup, we can generate data using the commoditys chaincode
 and use our application to replicate the data to our database. Open a new
 terminal and navigate to the `fabric-samples/off_chain_data` directory.
 
-You can use the `addMarbles.js` file to add random sample data to blockchain.
-The file uses the configuration information stored in `addMarbles.json` to
-create a series of marbles. This file will be created during the first execution
-of `addMarbles.js` if it does not exist. This program can be run multiple times
-without changing the properties. The `nextMarbleNumber` will be incremented and
-stored in the `addMarbles.json` file.
+You can use the `addcommoditys.js` file to add random sample data to blockchain.
+The file uses the configuration information stored in `addcommoditys.json` to
+create a series of commoditys. This file will be created during the first execution
+of `addcommoditys.js` if it does not exist. This program can be run multiple times
+without changing the properties. The `nextcommodityNumber` will be incremented and
+stored in the `addcommoditys.json` file.
 
 ```
     {
-        "nextMarbleNumber": 100,
-        "numberMarblesToAdd": 20
+        "nextcommodityNumber": 100,
+        "numbercommoditysToAdd": 20
     }
 ```
 
-Open a new window and run the following command to add 20 marbles to the
+Open a new window and run the following command to add 20 commoditys to the
 blockchain:
 
 ```
-node addMarbles.js
+node addcommoditys.js
 ```
 
-After the marbles have been added to the ledger, use the following command to
-transfer one of the marbles to a new owner:
+After the commoditys have been added to the ledger, use the following command to
+transfer one of the commoditys to a new owner:
 
 ```
-node transferMarble.js marble110 james
+node transfercommodity.js commodity110 james
 ```
 
-Now run the following command to delete the marble that was transferred:
+Now run the following command to delete the commodity that was transferred:
 
 ```
-node deleteMarble.js marble110
+node deletecommodity.js commodity110
 ```
 
 ## Offchain CouchDB storage:
@@ -188,17 +188,17 @@ The first table is an offline representation of the current world state of the
 blockchain ledger. This table was created using the read-write set data from
 the blocks. If the listener is running, this table should be the same as the
 latest values in the state database running on your peer. The table is named
-after the channelid and chaincodeid, and is named mychannel_marbles in this
+after the channelid and chaincodeid, and is named mychannel_commoditys in this
 example. You can navigate to this table using your browser:
-http://127.0.0.1:5990/mychannel_marbles/_all_docs
+http://127.0.0.1:5990/mychannel_commoditys/_all_docs
 
 A second table records each block as a historical record entry, and was created
 using the block data that was recorded in the log file. The table name appends
-history to the name of the first table, and is named mychannel_marbles_history
+history to the name of the first table, and is named mychannel_commoditys_history
 in this example. You can also navigate to this table using your browser:
-http://127.0.0.1:5990/mychannel_marbles_history/_all_docs
+http://127.0.0.1:5990/mychannel_commoditys_history/_all_docs
 
-### Configure a map/reduce view for summarizing counts of marbles by color:
+### Configure a map/reduce view for summarizing counts of commoditys by color:
 
 Now that we have state and history data replicated to tables in CouchDB, we
 can use the following commands query our off-chain data. We will also add an
@@ -209,16 +209,16 @@ created when events are received.
 Open a new terminal window and execute the following:
 
 ```
-curl -X PUT http://127.0.0.1:5990/mychannel_marbles/_design/colorviewdesign -d '{"views":{"colorview":{"map":"function (doc) { emit(doc.color, 1);}","reduce":"function ( keys , values , combine ) {return sum( values )}"}}}' -H 'Content-Type:application/json'
+curl -X PUT http://127.0.0.1:5990/mychannel_commoditys/_design/colorviewdesign -d '{"views":{"colorview":{"map":"function (doc) { emit(doc.color, 1);}","reduce":"function ( keys , values , combine ) {return sum( values )}"}}}' -H 'Content-Type:application/json'
 ```
 
-Execute a query to retrieve the total number of marbles (reduce function):
+Execute a query to retrieve the total number of commoditys (reduce function):
 
 ```
-curl -X GET http://127.0.0.1:5990/mychannel_marbles/_design/colorviewdesign/_view/colorview?reduce=true
+curl -X GET http://127.0.0.1:5990/mychannel_commoditys/_design/colorviewdesign/_view/colorview?reduce=true
 ```
 
-If successful, this command will return the number of marbles in the blockchain
+If successful, this command will return the number of commoditys in the blockchain
 world state, without having to query the blockchain ledger:
 
 ```
@@ -227,13 +227,13 @@ world state, without having to query the blockchain ledger:
   ]}
 ```
 
-Execute a new query to retrieve the number of marbles by color (map function):
+Execute a new query to retrieve the number of commoditys by color (map function):
 
 ```
-curl -X GET http://127.0.0.1:5990/mychannel_marbles/_design/colorviewdesign/_view/colorview?group=true
+curl -X GET http://127.0.0.1:5990/mychannel_commoditys/_design/colorviewdesign/_view/colorview?group=true
 ```
 
-The command will return a list of marbles by color from the CouchDB database.
+The command will return a list of commoditys by color from the CouchDB database.
 
 ```
 {"rows":[
@@ -248,27 +248,27 @@ The command will return a list of marbles by color from the CouchDB database.
 
 To run a more complex command that reads through the block history database, we
 will create an index of the blocknumber, sequence, and key fields. This index
-will support a query that traces the history of each marble. Execute the
+will support a query that traces the history of each commodity. Execute the
 following command to create the index:
 
 ```
-curl -X POST http://127.0.0.1:5990/mychannel_marbles_history/_index -d '{"index":{"fields":["blocknumber", "sequence", "key"]},"name":"marble_history"}'  -H 'Content-Type:application/json'
+curl -X POST http://127.0.0.1:5990/mychannel_commoditys_history/_index -d '{"index":{"fields":["blocknumber", "sequence", "key"]},"name":"commodity_history"}'  -H 'Content-Type:application/json'
 ```
 
-Now execute a query to retrieve the history for the marble we transferred and
+Now execute a query to retrieve the history for the commodity we transferred and
 then deleted:
 
 ```
-curl -X POST http://127.0.0.1:5990/mychannel_marbles_history/_find -d '{"selector":{"key":{"$eq":"marble110"}}, "fields":["blocknumber","is_delete","value"],"sort":[{"blocknumber":"asc"}, {"sequence":"asc"}]}'  -H 'Content-Type:application/json'
+curl -X POST http://127.0.0.1:5990/mychannel_commoditys_history/_find -d '{"selector":{"key":{"$eq":"commodity110"}}, "fields":["blocknumber","is_delete","value"],"sort":[{"blocknumber":"asc"}, {"sequence":"asc"}]}'  -H 'Content-Type:application/json'
 ```
 
-You should see the transaction history of the marble that was created,
+You should see the transaction history of the commodity that was created,
 transferred, and then removed from the ledger.
 
 ```
 {"docs":[
-{"blocknumber":12,"is_delete":false,"value":"{\"docType\":\"marble\",\"name\":\"marble110\",\"color\":\"blue\",\"size\":60,\"owner\":\"debra\"}"},
-{"blocknumber":22,"is_delete":false,"value":"{\"docType\":\"marble\",\"name\":\"marble110\",\"color\":\"blue\",\"size\":60,\"owner\":\"james\"}"},
+{"blocknumber":12,"is_delete":false,"value":"{\"docType\":\"commodity\",\"name\":\"commodity110\",\"color\":\"blue\",\"size\":60,\"owner\":\"debra\"}"},
+{"blocknumber":22,"is_delete":false,"value":"{\"docType\":\"commodity\",\"name\":\"commodity110\",\"color\":\"blue\",\"size\":60,\"owner\":\"james\"}"},
 {"blocknumber":23,"is_delete":true,"value":""}
   ]}
 ```
@@ -282,19 +282,19 @@ have missed.
 
 If you ran through the example steps above, navigate back to the terminal window
 where `blockEventListener.js` is running and close it. Once the listener is no
-longer running, use the following command to add 20 more marbles to the
+longer running, use the following command to add 20 more commoditys to the
 ledger:
 
 ```
-node addMarbles.js
+node addcommoditys.js
 ```
 
-The listener will not be able to add the new marbles to your CouchDB database.
+The listener will not be able to add the new commoditys to your CouchDB database.
 If you check the current state table using the reduce command, you will only
-be able to see the original marbles in your database.
+be able to see the original commoditys in your database.
 
 ```
-curl -X GET http://127.0.0.1:5990/mychannel_marbles/_design/colorviewdesign/_view/colorview?reduce=true
+curl -X GET http://127.0.0.1:5990/mychannel_commoditys/_design/colorviewdesign/_view/colorview?reduce=true
 ```
 
 To add the new data to your off-chain database, remove the `nextblock.txt`
@@ -310,15 +310,15 @@ You can new re-run the channel listener to read every block from the channel:
 node blockEventListener.js
 ```
 
-This will rebuild the CouchDB tables and include the 20 marbles that have been
+This will rebuild the CouchDB tables and include the 20 commoditys that have been
 added to the ledger. If you run the reduce command against your database one
 more time,
 
 ```
-curl -X GET http://127.0.0.1:5990/mychannel_marbles/_design/colorviewdesign/_view/colorview?reduce=true
+curl -X GET http://127.0.0.1:5990/mychannel_commoditys/_design/colorviewdesign/_view/colorview?reduce=true
 ```
 
-you will be able to see that all of the marbles have been added to your
+you will be able to see that all of the commoditys have been added to your
 database:
 
 ```
@@ -337,8 +337,8 @@ and any accompanying artifacts.
 * Change back to `fabric-samples/off_chain_data` directory.
 * Remove the certificates you generated by deleting the `wallet` folder.
 * Delete `nextblock.txt` so you can start with the first block next time you
-  operate the listener. You can also reset the `nextMarbleNumber` in
-  `addMarbles.json` to 100.
+  operate the listener. You can also reset the `nextcommodityNumber` in
+  `addcommoditys.json` to 100.
 * To take down the local CouchDB database, first stop and then remove the
   docker container:
   ```
