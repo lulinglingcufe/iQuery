@@ -1,6 +1,6 @@
 # Quick Start
 
-We apply  [Hyperledger Caliper](https://github.com/hyperledger/caliper/)  to populate the basic distributed network with four types of IoT  transactions. 
+We apply  [Hyperledger Caliper](https://github.com/hyperledger/caliper/)  to populate the basic distributed network with four types of transactions. 
 
 1.**Transaction Type: initUser**
 
