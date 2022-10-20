@@ -1,6 +1,7 @@
 # Overview
 
-IQUERY project is an off-chain query layer for blockchain network in Hyperledger Fabric 1.4. We offer the block listener in [blocklistener  directory](/blocklistner) . We offer the benchmark script for baseline in [baseline directory](/baseline) . We offer the script in [experiment directory](/experiment ) . 
+IQUERY project is an off-chain query layer for blockchain network in Hyperledger Fabric 1.4 or Geth v1.10.23 (popular Go implementation of
+Ethereum) . We offer the block listener in [blocklistener  directory](/blocklistner) . We offer the benchmark script for baseline in [baseline directory](/baseline) . We offer the script in [experiment directory](/experiment ) . 
 
 The chaincode for payment network is in [contract directory](/blocklistner/src/contract/fabric/iot) 
 
